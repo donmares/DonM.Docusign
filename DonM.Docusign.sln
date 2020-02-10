@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Console", "DonM.Docusign.Console\DonM.Docusign.Console.csproj", "{98A0CBE4-1642-4CE7-8CF7-54203CC64819}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Library", "DonM.Docusign.Library\DonM.Docusign.Library.csproj", "{9061FD9E-13F9-49F5-AEA9-E942875FF40A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Test", "DonM.Docusign.Test\DonM.Docusign.Test.csproj", "{DE1AF791-41BE-4A1A-A07A-F62EE4207602}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A3EFC25-5AA7-49AB-BF0A-57094C8A0341}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleFiles", "SampleFiles", "{95163A3C-2575-4586-AB7E-9637F5B0026B}"
+	ProjectSection(SolutionItems) = preProject
+		DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test1.txt = DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test1.txt
+		DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test2.txt = DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test2.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98A0CBE4-1642-4CE7-8CF7-54203CC64819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A0CBE4-1642-4CE7-8CF7-54203CC64819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A0CBE4-1642-4CE7-8CF7-54203CC64819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A0CBE4-1642-4CE7-8CF7-54203CC64819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9061FD9E-13F9-49F5-AEA9-E942875FF40A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9061FD9E-13F9-49F5-AEA9-E942875FF40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9061FD9E-13F9-49F5-AEA9-E942875FF40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9061FD9E-13F9-49F5-AEA9-E942875FF40A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE1AF791-41BE-4A1A-A07A-F62EE4207602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1AF791-41BE-4A1A-A07A-F62EE4207602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1AF791-41BE-4A1A-A07A-F62EE4207602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1AF791-41BE-4A1A-A07A-F62EE4207602}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95163A3C-2575-4586-AB7E-9637F5B0026B} = {2A3EFC25-5AA7-49AB-BF0A-57094C8A0341}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FDB3958-D086-4F76-ACAD-C6796775C28C}
+	EndGlobalSection
+EndGlobal

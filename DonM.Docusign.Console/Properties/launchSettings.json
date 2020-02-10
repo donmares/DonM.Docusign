@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DonM.Docusign.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "the canal 6 test2.txt"
+    }
+  }
+}
