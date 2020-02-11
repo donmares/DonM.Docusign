@@ -20,5 +20,5 @@ The output is the distinct number of matches within the file/string.
 Future Enhancements could include doing pretty much all of the logic using Linq. Along with some defined rules for handling punctuation. 
 
 This solution is intended solely for the use of a coding exercise for DocuSign.
-Please respond with comments to donmares@gmail.com
+Please respond with comments and questions to donmares@gmail.com
 
