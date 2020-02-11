@@ -27,6 +27,15 @@ namespace DonM.Docusign.Test
         }
 
         [Fact]
+        public void GetRangeLengthTest()
+        {
+            IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 6, "the man in the canal");
+            List<Dictionary<int, string>> rangeList = proximitySearch.GetRanges();
+
+            Assert.True(rangeList.Count == 1);
+        }
+
+        [Fact]
         public void GetRangeExtraSpaceTest()
         {
             IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 2, "   the    \r\n     man      ");
@@ -36,24 +45,22 @@ namespace DonM.Docusign.Test
         }
 
         [Fact]
-        public void GetRangeSingleFailureTest()
+        public void GetRangeMinimumLengthTest()
         {
-            List<Dictionary<int, string>> rangeList = null;
             bool isFailure = false;
             try
             {
-                IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 3, "the man ");
-                rangeList = proximitySearch.GetRanges();
+                IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 1, " canal ");
             }
             catch (Exception ex)
             {
                 isFailure = true;
             }
-            Assert.True(rangeList == null && isFailure);
+            Assert.True(isFailure);
         }
 
         [Fact]
-        public void InvalidKeywordTest()
+        public void InvalidKeywordFailureTest()
         {
             bool isFailure = false;
             try
@@ -83,7 +90,17 @@ namespace DonM.Docusign.Test
         }
 
         [Fact]
-        public void CaseIncensitiveTest()
+        public void ExecuteNotFoundTest()
+        {
+            IFileReader fileReader = new FileReader();
+            IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 4, "inside a bluff");
+            int matchCount = proximitySearch.ExecuteSearch();
+
+            Assert.True(matchCount == 0);
+        }
+
+        [Fact]
+        public void ExecuteCaseIncensitiveTest()
         {
             IFileReader fileReader = new FileReader();
             IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 4, "The canal is beyond the bluff");

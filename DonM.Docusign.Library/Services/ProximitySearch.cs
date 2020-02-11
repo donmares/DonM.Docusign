@@ -22,6 +22,8 @@ namespace DonM.Docusign.Library.Services
 
             if (_FirstKeyword == _SecondKeyword)
                 throw new Exception("Error - first and second keywords cannot be the same");
+            if (range < 2)
+                throw new Exception("Error - range must be at least the number of keywords or 2");
 
             _Range = range;
             _SearchString = ValidateSearchString(searchString);
@@ -52,9 +54,10 @@ namespace DonM.Docusign.Library.Services
 
         /// <summary>
         /// return all possible ranges starting with position 0 and ending in length of range
-        /// range consists of dictionary of index posiition of words and actual words
+        /// range consists of dictionary of index position of words and actual words
         /// 
         /// This should be a private method but made public for testing purposes
+        /// Most likely able to improve performance using mostly all Linq instead of loops
         /// </summary>
         /// <returns></returns>
         public List<Dictionary<int, string>> GetRanges()
@@ -63,7 +66,7 @@ namespace DonM.Docusign.Library.Services
             List<Dictionary<int, string>> rangeList = new List<Dictionary<int, string>>();  ///key = index of search word, value = search word
 
             if (searchArray.Length < _Range)
-                throw new Exception("Error - search Array length must be equal to or greater than range");
+                _Range = searchArray.Length;
 
             for (int idx = 0; idx <= searchArray.Length - _Range; idx++)
             {
@@ -82,6 +85,7 @@ namespace DonM.Docusign.Library.Services
         /// return all possible keyword matches in range dictionary
         /// step 1 - store all matching keywords in dictionary
         /// step 2 - add all combinations of 1st and 2nd keywords in matchlist
+        /// Most likely able to improve performances using mostly all Linq instead of loops
         /// </summary>
         /// <param name="rangeDic"></param>
         /// <returns></returns>

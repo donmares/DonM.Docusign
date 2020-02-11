@@ -9,7 +9,8 @@ namespace DonM.Docusign.Library.Services
     public class FileReader : IFileReader
     {
         /// <summary>
-        /// simple method to read all lines from file into a string. 
+        /// simple method to read all lines from file into a string
+        /// Could likely improve performance and error handling
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
