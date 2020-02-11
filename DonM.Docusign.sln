@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Console", "DonM.Docusign.Console\DonM.Docusign.Console.csproj", "{98A0CBE4-1642-4CE7-8CF7-54203CC64819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonM.Docusign.Console", "DonM.Docusign.Console\DonM.Docusign.Console.csproj", "{98A0CBE4-1642-4CE7-8CF7-54203CC64819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Library", "DonM.Docusign.Library\DonM.Docusign.Library.csproj", "{9061FD9E-13F9-49F5-AEA9-E942875FF40A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonM.Docusign.Library", "DonM.Docusign.Library\DonM.Docusign.Library.csproj", "{9061FD9E-13F9-49F5-AEA9-E942875FF40A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonM.Docusign.Test", "DonM.Docusign.Test\DonM.Docusign.Test.csproj", "{DE1AF791-41BE-4A1A-A07A-F62EE4207602}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonM.Docusign.Test", "DonM.Docusign.Test\DonM.Docusign.Test.csproj", "{DE1AF791-41BE-4A1A-A07A-F62EE4207602}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A3EFC25-5AA7-49AB-BF0A-57094C8A0341}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleFiles", "SampleFiles"
 	ProjectSection(SolutionItems) = preProject
 		DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test1.txt = DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test1.txt
 		DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test2.txt = DonM.Docusign.Console\bin\Debug\netcoreapp2.2\test2.txt
+		DonM.Docusign.Test\bin\Debug\netcoreapp2.2\test3.txt = DonM.Docusign.Test\bin\Debug\netcoreapp2.2\test3.txt
 	EndProjectSection
 EndProject
 Global

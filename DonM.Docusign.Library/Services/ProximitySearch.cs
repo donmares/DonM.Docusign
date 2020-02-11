@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using DonM.Docusign.Library.Interfaces;
 using DonM.Docusign.Library.Models;
 
@@ -15,14 +17,14 @@ namespace DonM.Docusign.Library.Services
         
         public ProximitySearch(string firstKeyword, string secondKeyword, int range, string searchString)
         {
-            _FirstKeyword = firstKeyword.ToLower().Trim();
-            _SecondKeyword = secondKeyword.ToLower().Trim();
+            _FirstKeyword = ValidateKeyword(firstKeyword);
+            _SecondKeyword = ValidateKeyword(secondKeyword);
 
             if (_FirstKeyword == _SecondKeyword)
                 throw new Exception("Error - first and second keywords cannot be the same");
 
             _Range = range;
-            _SearchString = RemoveExtraSpaces(searchString.Trim());
+            _SearchString = ValidateSearchString(searchString);
         }
         
         /// <summary>
@@ -120,16 +122,32 @@ namespace DonM.Docusign.Library.Services
         }
 
         /// <summary>
-        /// removes excess blank characters and line feed characters. Could be improved with stringBuilder but not sure its necessary.
+        /// removes excess blank characters and line feed characters.
+        /// Consider removing punctuation like periods, hyphens and others
         /// </summary>
         /// <param name="inputString"></param>
         /// <returns></returns>
-        private string RemoveExtraSpaces(string inputString)
+        private string ValidateSearchString(string inputString)
         {
-            inputString = inputString.Replace("\r", "").Replace("\n", "");
-            while (inputString.Contains("  "))
-                inputString = inputString.Replace("  ", " ");
-            return inputString;
+            StringBuilder sb = new StringBuilder(inputString.Trim());
+            sb.Replace("\r", " ").Replace("\n", " ");
+            while (sb.ToString().Contains("  "))
+                sb.Replace("  ", " ");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// verifies no white spaces in keyword
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        private string ValidateKeyword(string keyword)
+        {
+            Regex regex = new Regex("[\\s]");
+            if (regex.IsMatch(keyword))
+                throw new Exception("Error - keyword cannot contain white space");
+
+            return keyword.ToLower().Trim();
         }
     }
 }

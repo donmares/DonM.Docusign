@@ -39,6 +39,7 @@ namespace DonM.Docusign.Test
         public void GetRangeSingleFailureTest()
         {
             List<Dictionary<int, string>> rangeList = null;
+            bool isFailure = false;
             try
             {
                 IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 3, "the man ");
@@ -46,9 +47,24 @@ namespace DonM.Docusign.Test
             }
             catch (Exception ex)
             {
-
+                isFailure = true;
             }
-            Assert.True(rangeList == null);
+            Assert.True(rangeList == null && isFailure);
+        }
+
+        [Fact]
+        public void InvalidKeywordTest()
+        {
+            bool isFailure = false;
+            try
+            {
+                IProximitySearch proximitySearch = new ProximitySearch("the new", "canal", 3, "the new man canal");
+            }
+            catch (Exception ex)
+            {
+                isFailure = true;
+            }
+            Assert.True(isFailure);
         }
 
         [Fact]
@@ -64,6 +80,16 @@ namespace DonM.Docusign.Test
                 isFailure = true;
             }
             Assert.True(isFailure);
+        }
+
+        [Fact]
+        public void CaseIncensitiveTest()
+        {
+            IFileReader fileReader = new FileReader();
+            IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 4, "The canal is beyond the bluff");
+            int matchCount = proximitySearch.ExecuteSearch();
+
+            Assert.True(matchCount == 2);
         }
 
         [Fact]
@@ -91,6 +117,16 @@ namespace DonM.Docusign.Test
             int matchCount = proximitySearch.ExecuteSearch();
 
             Assert.True(matchCount == 11);
+        }
+
+        [Fact]
+        public void ExecuteFileTest()
+        {
+            IFileReader fileReader = new FileReader();
+            IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 6, fileReader.ReadAll("test3.txt"));
+            int matchCount = proximitySearch.ExecuteSearch();
+
+            Assert.True(matchCount == 12);
         }
     }
 
