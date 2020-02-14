@@ -126,22 +126,23 @@ namespace DonM.Docusign.Library.Services
         }
 
         /// <summary>
-        /// removes excess blank characters and line feed characters.
-        /// Consider removing punctuation like periods, hyphens and others
+        /// removes punctuation, escape characters and excessive blank spaces.
         /// </summary>
         /// <param name="inputString"></param>
         /// <returns></returns>
         private string ValidateSearchString(string inputString)
         {
-            StringBuilder sb = new StringBuilder(inputString.Trim());
-            sb.Replace("\r", " ").Replace("\n", " ");
+            Regex regex = new Regex(@"[\p{P}\b\f\r\n\t\v\$\=\+\*\/\?\^\'\\`\~\|\<\>\[\]\{\}]");
+            string str = regex.Replace(inputString.Trim(), " ");
+            StringBuilder sb = new StringBuilder(str);
+            sb.Replace("\"", " ");
             while (sb.ToString().Contains("  "))
                 sb.Replace("  ", " ");
             return sb.ToString();
         }
 
         /// <summary>
-        /// verifies no white spaces in keyword
+        /// verifies no white spaces in keywordr
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns></returns>

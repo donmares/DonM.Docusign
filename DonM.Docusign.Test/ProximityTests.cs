@@ -143,7 +143,7 @@ namespace DonM.Docusign.Test
             IProximitySearch proximitySearch = new ProximitySearch("the", "canal", 6, fileReader.ReadAll("test3.txt"));
             int matchCount = proximitySearch.ExecuteSearch();
 
-            Assert.True(matchCount == 12);
+            Assert.True(matchCount == 15);
         }
     }
 
