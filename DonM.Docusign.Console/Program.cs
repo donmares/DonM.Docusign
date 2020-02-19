@@ -20,9 +20,9 @@ namespace DonM.Docusign.Console
                 IFileReader fileReader = new FileReader();
                 string fileContents = fileReader.ReadAll(args[3]);
                 
-                IProximitySearch proximitySearch = new ProximitySearch(args[0], args[1], range, fileContents);
+                IProximitySearch proximitySearch = new ProximitySearch();
 
-                int matchCount = proximitySearch.ExecuteSearch();
+                int matchCount = proximitySearch.ExecuteSearch(args[0], args[1], range, fileContents);
 
                 System.Console.WriteLine($"Success - returned {matchCount} matches");
             }

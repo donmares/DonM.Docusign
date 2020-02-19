@@ -4,9 +4,9 @@ namespace DonM.Docusign.Library.Interfaces
 {
     public interface IProximitySearch
     {
-        int ExecuteSearch();
+        int ExecuteSearch(string firstKeyword, string secondKeyword, int range, string searchString);
 
         //this should not be in interface but used for testing purposes
-        List<Dictionary<int, string>> GetRanges();
+        List<Dictionary<int, string>> GetRanges(int range, string searchString);
     }
 }

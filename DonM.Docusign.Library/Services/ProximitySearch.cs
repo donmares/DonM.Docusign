@@ -9,24 +9,9 @@ using DonM.Docusign.Library.Models;
 namespace DonM.Docusign.Library.Services
 {
     public class ProximitySearch: IProximitySearch
-    {
-        private string _FirstKeyword = "";
-        private string _SecondKeyword = "";
-        private int _Range = 0;
-        private string _SearchString = "";
-        
-        public ProximitySearch(string firstKeyword, string secondKeyword, int range, string searchString)
+    {       
+        public ProximitySearch()
         {
-            _FirstKeyword = ValidateKeyword(firstKeyword);
-            _SecondKeyword = ValidateKeyword(secondKeyword);
-
-            if (_FirstKeyword == _SecondKeyword)
-                throw new Exception("Error - first and second keywords cannot be the same");
-            if (range < 2)
-                throw new Exception("Error - range must be at least the number of keywords or 2");
-
-            _Range = range;
-            _SearchString = ValidateSearchString(searchString);
         }
         
         /// <summary>
@@ -37,14 +22,16 @@ namespace DonM.Docusign.Library.Services
         /// step 3 - return count of matches
         /// </summary>
         /// <returns></returns>
-        public int ExecuteSearch()
+        public int ExecuteSearch(string firstKeyword, string secondKeyword, int range, string searchString)
         {
+            ValidateInputs(ref firstKeyword, ref secondKeyword, range, ref searchString);
+
             List<KeywordMatch> matchList = new List<KeywordMatch>();
-            List<Dictionary<int, string>> rangeDic = GetRanges();
+            List<Dictionary<int, string>> rangeDic = GetRanges(range, searchString);
 
             foreach (Dictionary<int, string> rangeString in rangeDic)
             {
-                List<KeywordMatch> rangeMatchList = GetRangeMatches(rangeString);
+                List<KeywordMatch> rangeMatchList = GetRangeMatches(firstKeyword, secondKeyword, rangeString);
                 IEnumerable<KeywordMatch> newMatches = rangeMatchList.Where(r => !matchList.Any(m => m.Equals(r)));
                 matchList.AddRange(newMatches);
             }
@@ -57,21 +44,21 @@ namespace DonM.Docusign.Library.Services
         /// range consists of dictionary of index position of words and actual words
         /// 
         /// This should be a private method but made public for testing purposes
-        /// Most likely able to improve performance using mostly all Linq instead of loops
+        /// Possibly able to improve performance using Linq instead of loops
         /// </summary>
         /// <returns></returns>
-        public List<Dictionary<int, string>> GetRanges()
+        public List<Dictionary<int, string>> GetRanges(int range, string searchString)
         {
-            string[] searchArray = _SearchString.Split(' ');
+            string[] searchArray = searchString.Split(' ');
             List<Dictionary<int, string>> rangeList = new List<Dictionary<int, string>>();  ///key = index of search word, value = search word
 
-            if (searchArray.Length < _Range)
-                _Range = searchArray.Length;
+            if (searchArray.Length < range)
+                range = searchArray.Length;
 
-            for (int idx = 0; idx <= searchArray.Length - _Range; idx++)
+            for (int idx = 0; idx <= searchArray.Length - range; idx++)
             {
                 Dictionary<int, string> rangeDic = new Dictionary<int, string>();
-                for (int rangeIdx = 0; rangeIdx < _Range; rangeIdx++)
+                for (int rangeIdx = 0; rangeIdx < range; rangeIdx++)
                 {
                     rangeDic.Add(idx + rangeIdx, searchArray[idx + rangeIdx]);
                 }
@@ -85,11 +72,11 @@ namespace DonM.Docusign.Library.Services
         /// return all possible keyword matches in range dictionary
         /// step 1 - store all matching keywords in dictionary
         /// step 2 - add all combinations of 1st and 2nd keywords in matchlist
-        /// Most likely able to improve performances using mostly all Linq instead of loops
+        /// Possibly able to improve performance using Linq instead of loops
         /// </summary>
         /// <param name="rangeDic"></param>
         /// <returns></returns>
-        private List<KeywordMatch> GetRangeMatches(Dictionary<int, string> rangeDic)
+        private List<KeywordMatch> GetRangeMatches(string firstKeyword, string secondKeyword, Dictionary<int, string> rangeDic)
         {
             List<KeywordMatch> matchList = new List<KeywordMatch>();
             Dictionary<int, int> keywordDic = new Dictionary<int, int>();   //key = index, value = 1 or 2 designating first or second keyword
@@ -97,11 +84,11 @@ namespace DonM.Docusign.Library.Services
             //step 1 - store all matching keywords in dictionary
             for (int idx=rangeDic.Keys.Min(); idx <= rangeDic.Keys.Max(); idx++)
             {
-                if (rangeDic[idx].Trim().ToLower() == _FirstKeyword)
+                if (rangeDic[idx] == firstKeyword)
                 {
                     keywordDic.Add(idx, 1);
                 }
-                else if (rangeDic[idx].Replace("\r", "").Replace("\n", "").Trim().ToLower() == _SecondKeyword)
+                else if (rangeDic[idx] == secondKeyword)
                 {
                     keywordDic.Add(idx, 2);
                 }
@@ -125,6 +112,18 @@ namespace DonM.Docusign.Library.Services
             return matchList;
         }
 
+        private void ValidateInputs(ref string firstKeyword, ref string secondKeyword, int range, ref string searchString)
+        {
+            firstKeyword = ValidateKeyword(firstKeyword);
+            secondKeyword = ValidateKeyword(secondKeyword);
+
+            if (firstKeyword == secondKeyword)
+                throw new Exception("Error - first and second keywords cannot be the same");
+            if (range < 2)
+                throw new Exception("Error - range must be at least the number of keywords or 2");
+
+            searchString = ValidateSearchString(searchString);
+        }
         /// <summary>
         /// removes punctuation, escape characters and excessive blank spaces.
         /// </summary>
@@ -134,7 +133,7 @@ namespace DonM.Docusign.Library.Services
         {
             Regex regex = new Regex(@"[\p{P}\b\f\r\n\t\v\$\=\+\*\/\?\^\'\\`\~\|\<\>\[\]\{\}]");
             string str = regex.Replace(inputString.Trim(), " ");
-            StringBuilder sb = new StringBuilder(str);
+            StringBuilder sb = new StringBuilder(str.ToLower().Trim());
             sb.Replace("\"", " ");
             while (sb.ToString().Contains("  "))
                 sb.Replace("  ", " ");
